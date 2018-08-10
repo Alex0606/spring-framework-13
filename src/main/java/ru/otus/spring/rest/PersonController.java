@@ -67,9 +67,4 @@ public class PersonController {
         person.setName(name);
         repository.save(person);
     }
-
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<String> handleNotEnoughFunds(NotFoundException ex) {
-        return ResponseEntity.badRequest().body("Not found");
-    }
 }
