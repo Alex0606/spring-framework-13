@@ -28,43 +28,4 @@ public class PersonController {
                 .map(PersonDto::toDto)
                 .collect(Collectors.toList());
     }
-
-    @RequestMapping(
-            value = "/person/{id}",
-            method = RequestMethod.GET
-    )
-    public PersonDto get(
-            @PathVariable("id") int id
-    ) {
-        Person person = repository.findById(id).orElseThrow(NotFoundException::new);
-        return PersonDto.toDto(person);
-    }
-
-    @RequestMapping(
-            value = "/person/",
-            method = RequestMethod.POST
-    )
-    public @ResponseBody
-    PersonDto create(
-            @RequestBody PersonDto dto
-    ) {
-        Person account = PersonDto.toDomainObject(dto);
-        Person accountWithId = repository.save(account);
-        return PersonDto.toDto(accountWithId);
-    }
-
-    @DeleteMapping("/person/{id}")
-    public void delete(@PathVariable("id") int id) {
-        repository.deleteById(id);
-    }
-
-    @PutMapping("/person/{id}/holder")
-    public void changeName(
-            @PathVariable("id") int id,
-            @RequestParam("name") String name
-    ) {
-        Person person = repository.findById(id).orElseThrow(NotFoundException::new);
-        person.setName(name);
-        repository.save(person);
-    }
 }
